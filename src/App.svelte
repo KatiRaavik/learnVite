@@ -7,6 +7,11 @@
     {name: 'sai', isDone: false}, 
     {name: 'leib', isDone: false},
   ];
+
+  $: doneItems = items.filter((item)=>item.isDone);
+
+  $: notDoneItems = items.filter(item => !item.isDone)
+
   function add(){
     if (message.trim() !== ''){
       items = [
@@ -26,10 +31,30 @@
 
 <input type="text" bind:value={message} on:keydown={keyDown}/>
 <button on:click={()=>add()}>Add</button>
-<h1>{message}</h1>
 
+<h1>All items</h1>
 <ul>
   {#each items as item}
+  <li>
+    {item.name}
+    <input type="checkbox" bind:checked={item.isDone}>
+    </li>
+  {/each}
+</ul>
+
+<h1>Done items</h1>
+<ul>
+  {#each doneItems as item}
+  <li>
+    {item.name}
+    <input type="checkbox" bind:checked={item.isDone}>
+    </li>
+  {/each}
+</ul>
+
+<h1>Not done items</h1>
+<ul>
+  {#each notDoneItems as item}
   <li>
     {item.name}
     <input type="checkbox" bind:checked={item.isDone}>
